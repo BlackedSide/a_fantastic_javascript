@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>一个神奇的网站</title>
+	<link rel="stylesheet" href="./css/base.css">
+</head>
+<body>
+<div class="header">
+	<span class="nav-menu">菜单</span>
+	<ul class="nav clearfix">
+		<li><a class="active" href="#">首页</a></li>
+		<li><a href="#">产品</a></li>
+		<li><a href="#">新闻</a></li>
+		<li><a href="#">关于</a></li>
+		<li><a href="#" id="login-btn">登录</a></li>
+	</ul>
+
+	<div class="modal" id="login-modal">
+		<div class="modal-content">
+			<h1>登 录</h1>
+			<form action="">
+				账 号<br><input type="text"><br>
+				密 码<br><input type="text"><br>
+				<input type="submit" value="提 交" class="login-submit">
+			</form>
+		</div>
+	</div>
+</div>
+<div class="banner">
+	<ul>
+		<li class="li_img fade"><img src="./images/meizu1.jpg" alt=""></li>
+		<li class="li_img fade"><img src="./images/meizu2.jpg" alt=""></li>
+		<li class="li_img fade"><img src="./images/meizu3.jpg" alt=""></li>
+	</ul>
+	<a class="prev">❮</a>
+	<a class="next">❯</a>
+</div>
+</body>
+<script>
+	var navOpen = document.getElementsByClassName('nav-menu');
+	navOpen[0].onclick = function(){
+		var panel = this.nextElementSibling;
+		if(panel.style.maxHeight){
+			panel.style.maxHeight = null;
+		}else{
+			panel.style.maxHeight = panel.scrollHeight + "px";
+		}
+	}
+</script>
+<script>
+	var modal = document.getElementById("login-modal");
+	var btn = document.getElementById("login-btn");
+
+	btn.onclick = function(){
+		modal.style.display = "block";
+	}
+	window.onclick = function(event){
+		if(event.target == modal){
+			modal.style.display = "none";
+		}
+	}
+</script>
+<script>
+	var i;
+	var count = 0;
+	var timer;
+	var prev = document.getElementsByClassName("prev")[0];
+	var next = document.getElementsByClassName("next")[0];
+	var li_img = document.getElementsByClassName("li_img");
+
+	window.onload = function(){
+		initShow(0);
+		showSlides();
+
+		prev.onmouseover = function(){clearInterval(timer);}
+		next.onmouseover = function(){clearInterval(timer);}
+		prev.onmouseout = function(){showSlides();}
+		next.onmouseout = function(){showSlides();}
+		prev.onclick = function(){
+			count--;
+			if(count < 0){
+				count = li_img.length-1;
+			}
+			initShow(count);
+		}
+		next.onclick = function(){
+			count++;
+			if(count == li_img.length){
+				count = 0;
+			}
+			initShow(count);
+		}
+	}
+	function showSlides(){
+		timer = setInterval(function(){
+			initShow(count);
+			count++;
+			if(count == li_img.length){
+				count = 0;
+			}
+		},3000);
+	}
+	function initShow(counti){
+		for(i=0;i<li_img.length;i++){
+			li_img[i].style.display = "none";
+		}
+		li_img[counti].style.display = "block";
+	}
+</script>
+</html>
